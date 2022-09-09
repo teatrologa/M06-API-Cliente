@@ -1,11 +1,12 @@
 ﻿using Dapper;
+using M06_API_Cliente.Core.Interface;
 using M06_API_Cliente.Core.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
 namespace M06_API_Cliente.Infra.Data
 {
-    public class ClienteRepository
+    public class ClienteRepository : IClienteRepository
     {
         private IConfiguration _configuration;
 

@@ -1,0 +1,12 @@
+Realize um log na APIClientes para registrar quantos segundos a ação está demorando para ser executada.
+
+Implemente na APIClientes uma validação de CPF na inserção. Caso o CPF já exista na base, retorne Status de Conflito.
+
+Implemente na APIClientes uma validação no update. Caso o registro a ser atualizado não exista, retorne status de BadRequest.
+Caso o registro exista e o update não consiga ser efetivado, retorne Internal Server Error.
+
+Implemente na APIClientes a seguintes tratativas de exceção:
+
+SqlException: retorne status serviço indisponível e a mensagem: "Erro inesperado ao se comunicar com o banco de dados"
+NullReferenceException: retorne status 417 e a mensagem: "Erro inesperado no sistema"
+Caso não seja nenhum erro: retorne status 500 e a mensagem: "Erro inesperado. Tente novamente"

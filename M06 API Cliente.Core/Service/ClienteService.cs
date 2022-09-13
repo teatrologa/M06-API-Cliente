@@ -26,6 +26,11 @@ namespace M06_API_Cliente.Core.Service
             return _clienteRepository.GetClienteCpf(cpf);
         }
 
+        public bool GetClienteCpfBool(string cpf)
+        {
+            return _clienteRepository.GetClienteCpfBool(cpf);
+        }
+
         public bool InsertCliente(Cliente cliente)
         {
             return _clienteRepository.InsertCliente(cliente);

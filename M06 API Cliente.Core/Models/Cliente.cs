@@ -1,4 +1,6 @@
-﻿namespace M06_API_Cliente.Core.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace M06_API_Cliente.Core.Models
 {
     public class Cliente
     {
@@ -11,5 +13,7 @@
         public DateTime DataNascimento { get; set; }
 
         public int Idade => DateTime.Now.Year - DataNascimento.Year;
+
+        public string Permissao { get; set; }
     }
 }

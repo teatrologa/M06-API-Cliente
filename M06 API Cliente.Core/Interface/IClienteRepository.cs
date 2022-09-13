@@ -12,7 +12,9 @@ namespace M06_API_Cliente.Core.Interface
         public List<Cliente> GetCliente();
         
         public Cliente GetClienteCpf(string cpf);
-        
+
+        public bool GetClienteCpfBool(string cpf);
+
         public bool InsertCliente(Cliente cliente);
         
         public bool UpdateCliente(string cpf, Cliente cliente);

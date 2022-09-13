@@ -1,5 +1,6 @@
 using M06_API_Cliente.Core.Interface;
 using M06_API_Cliente.Core.Models;
+using M06_API_Cliente.Filters;
 using M06_API_Cliente.Infra.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,7 @@ namespace M06_API_Cliente.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[TypeFilter(typeof())]
         public ActionResult<List<Cliente>> AllCliente()
         {
             var clientes = _clienteService.GetCliente();
@@ -51,11 +53,12 @@ namespace M06_API_Cliente.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ServiceFilter(typeof(VerificarCpfActionFilter))]
         public ActionResult<Cliente> InsertCliente(Cliente cliente)
         {
             if (!_clienteService.InsertCliente(cliente))
             {
-                return BadRequest("Não foi possível criar um registro para esse cliente.");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
             return CreatedAtAction(nameof(InsertCliente), cliente);
         }
@@ -64,12 +67,14 @@ namespace M06_API_Cliente.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ServiceFilter(typeof(VerificarClienteActionFilter))]
         public IActionResult Atualizacao(string cpf, Cliente cliente)
         {
             if (!_clienteService.UpdateCliente(cpf, cliente))
             {
-                return NotFound("Este cpf não pertence a nenhum cliente cadastrado.");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
+
             _clienteService.UpdateCliente(cpf, cliente);
             var clienteAtualizado = _clienteService.GetClienteCpf(cpf);
             return Accepted(clienteAtualizado);

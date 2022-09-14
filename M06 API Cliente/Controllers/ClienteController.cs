@@ -70,14 +70,21 @@ namespace M06_API_Cliente.Controllers
         [ServiceFilter(typeof(VerificarClienteActionFilter))]
         public IActionResult Atualizacao(string cpf, Cliente cliente)
         {
-            if (!_clienteService.UpdateCliente(cpf, cliente))
+            //if (!_clienteService.UpdateCliente(cpf, cliente))
+            //{
+            //    return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            //}
+            try
+            {
+                _clienteService.UpdateCliente(cpf, cliente);
+                var clienteAtualizado = _clienteService.GetClienteCpf(cpf);
+                return Accepted(clienteAtualizado);
+            }
+            catch
             {
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
-
-            _clienteService.UpdateCliente(cpf, cliente);
-            var clienteAtualizado = _clienteService.GetClienteCpf(cpf);
-            return Accepted(clienteAtualizado);
+           
         }
 
         [HttpDelete("/Cliente/Deletar/{cpf}")]
